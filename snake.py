@@ -16,6 +16,12 @@ y = SCREEN_HEIGHT / 2
 surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 rect = pygame.Rect(x, y, snake_1, snake_2)
 
+# how fast the snake moves
+speed = 0.5
+
+# variables for steering snake's movement
+move_x = 0
+move_y = 10
 
 run = True
 
@@ -24,12 +30,27 @@ while run:
     for event in ev:
         if event.type == pygame.QUIT:
             run = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                move_x = 0
+                move_y = -10
+            elif event.key == pygame.K_DOWN:
+                move_x = 0
+                move_y = 10
+            elif event.key == pygame.K_RIGHT:
+                move_x = 10
+                move_y = 0
+            elif event.key == pygame.K_LEFT:
+                move_x = -10
+                move_y = 0
+
     surface.fill((255, 255, 255))
     pygame.draw.rect(surface, color, rect)
-    rect = pygame.Rect.move(rect, 0, 10)
+
+    rect = pygame.Rect.move(rect, move_x, move_y)
     pygame.display.update()
 
-    time.sleep(0.5)
+    time.sleep(speed)
 
 
 pygame.quit()
