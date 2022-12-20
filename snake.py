@@ -10,8 +10,8 @@ SCREEN_HEIGHT = 600
 color = (0, 245, 0)
 
 # the size of snake head
-width = 20
-height = 20
+snake_width = 20
+snake_height = 20
 
 # snake's starting point
 x = SCREEN_WIDTH / 2
@@ -19,14 +19,13 @@ y = SCREEN_HEIGHT / 2
 
 # creating a window and the snake
 surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-rect = pygame.Rect(x, y, width, height)
 
 # how fast the snake moves
-speed = 0.4
+speed = 0.3
 
 # variables for steering snake's movement
 move_x = 0
-move_y = 10
+move_y = 0
 
 run = True
 
@@ -49,12 +48,19 @@ while run:
                 move_x = -10
                 move_y = 0
 
+    x += move_x
+    y += move_y
+
+    if x >= SCREEN_HEIGHT or x < 0 or y >= SCREEN_WIDTH or y < 0:
+        run = False
+
     surface.fill((0, 0, 255))
-    pygame.draw.rect(surface, color, rect)
-    rect = pygame.Rect.move(rect, move_x, move_y)
+    pygame.draw.rect(surface, color, [x, y, snake_width, snake_height])
+
     pygame.display.update()
 
     time.sleep(speed)
 
 
 pygame.quit()
+quit()
